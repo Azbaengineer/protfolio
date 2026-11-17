@@ -4,6 +4,16 @@ import "./styles.css";
 
 const projects = [
   {
+    id:"forge", animal:"beaver", animalLabel:"build supervisor", visual:"forge",
+    eyebrow:"AGENTIC AI · SOFTWARE ENGINEERING · IN DEVELOPMENT", title:"FORGE — Agentic Software Factory",
+    summary:"A governed multi-agent workflow for turning software requirements into reviewable code proposals, with testing and human approval as design priorities.",
+    tech:["LangGraph","FastAPI","Python","OpenAI"],
+    result:"Starter scaffold: API, agent workflow and demo mode. Repository editing and sandboxed tests are next.",
+    note:"Even autonomous builders need someone to check the blueprints.",
+    flow:["request","plan","build","review","test","approve"],
+    detail:{}
+  },
+  {
     id:"daev", animal:"shoebill", animalLabel:"peer reviewer", visual:"daev",
     eyebrow:"BACHELOR THESIS · MEDICAL AI", title:"Detect–Adapt–Explain–Verify",
     summary:"A medical-AI framework for testing whether models stay reliable when moved from one hospital dataset to another.",
@@ -156,6 +166,16 @@ function useReveal(){
 
 function Animal({type, className=""}){
   const common={className:`animal ${className}`, viewBox:"0 0 160 120", fill:"none", xmlns:"http://www.w3.org/2000/svg", "aria-hidden":"true"};
+  if(type==="beaver") return <svg {...common}>
+    <path d="M115 78q31-6 34 13t-31 13" fill="var(--ochre2)" stroke="currentColor" strokeWidth="3"/>
+    <path d="M35 78q-3-39 38-46 42-5 53 32 8 31-26 41-49 14-65-27Z" fill="var(--ochre2)" stroke="currentColor" strokeWidth="3"/>
+    <circle cx="53" cy="39" r="12" fill="var(--ochre2)" stroke="currentColor" strokeWidth="3"/>
+    <circle cx="106" cy="38" r="12" fill="var(--ochre2)" stroke="currentColor" strokeWidth="3"/>
+    <circle cx="65" cy="62" r="3" fill="currentColor"/><circle cx="99" cy="62" r="3" fill="currentColor"/>
+    <path d="M78 72h10l-5 5Z" fill="currentColor"/><path d="M75 81q8 7 16 0" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    <path d="M73 84v13h19V84" fill="var(--paper)" stroke="currentColor" strokeWidth="2"/>
+    <path d="M49 97v13M112 96v13" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+  </svg>;
   if(type==="capybara") return <svg {...common}>
     <path d="M31 77c-9-11-8-30 3-42 12-13 37-15 59-10 19 4 33 16 36 33 2 13-2 28-13 36-12 9-30 11-48 8-17-2-29-11-37-25Z" fill="var(--ochre2)" stroke="currentColor" strokeWidth="3"/>
     <path d="M113 36c9-10 22-10 28-1 6 9 3 24-7 30-8 5-18 3-25-3" fill="var(--ochre2)" stroke="currentColor" strokeWidth="3"/>
@@ -232,6 +252,17 @@ function MetricGraph(){
 }
 
 function ProjectVisual({type, large=false}){
+  if(type==="forge") return <div className="visual visual-forge" style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:14,padding:16,background:"var(--sage2)",color:"var(--ink)"}}>
+    <div style={{fontFamily:"inherit",fontSize:12,letterSpacing:2,fontWeight:800}}>THE LITTLE SOFTWARE FACTORY</div>
+    <div style={{display:"flex",alignItems:"center",justifyContent:"center",flexWrap:"wrap",gap:7}}>
+      {["request","planner","developer","reviewer"].map((step,i)=><React.Fragment key={step}>
+        {i>0&&<span aria-hidden="true">→</span>}
+        <span style={{border:"2px solid currentColor",borderRadius:10,padding:"8px 10px",background:"var(--paper)",fontSize:12,fontWeight:700}}>{step}</span>
+      </React.Fragment>)}
+    </div>
+    <div style={{border:"1.5px dashed currentColor",borderRadius:20,padding:"7px 14px",fontSize:12,textAlign:"center"}}>tests · policy checks · human approval</div>
+    <span style={{fontSize:11,opacity:.7}}>prototype workflow · execution sandbox planned</span>
+  </div>;
   if(type==="daev") return <div className={`visual visual-daev ${large?"large":""}`}>
     <div className="xray-card"><img src="/assets/xray-tent.png" alt="Chest X-ray with Grad-CAM attention overlay from the thesis experiments"/><span>VinDr-CXR · TENT</span></div>
     <div className="daev-orbit"><b>D</b><em>detect</em><b>A</b><em>adapt</em><b>E</b><em>explain</em><b>V</b><em>verify</em></div>
@@ -254,6 +285,7 @@ function ProjectVisual({type, large=false}){
 }
 
 const caseFacts={
+  forge:{what:"Explore how a team of AI agents can propose software changes while keeping review, safety and human control explicit.",did:"Designed the agent roles and governance workflow; began a FastAPI/LangGraph starter scaffold with demo-mode execution.",labels:["requirement","planner","developer","reviewer","approval"]},
   daev:{what:"Test whether chest X-ray models stay trustworthy when moved from NIH to VinDr-CXR.",did:"Designed the full D-A-E-V framework: adaptation, Grad-CAM analysis and a deployment verification gate.",labels:["NIH → VinDr","TENT / EATA","Grad-CAM","verification gate"]},
   rag:{what:"Turn scattered product documentation into grounded answers inside the support workflow.",did:"Helped build retrieval pipelines, knowledge preparation and the Salesforce integration around the assistant.",labels:["enterprise docs","retrieval","LLM","Salesforce"]},
   pipeline:{what:"Keep the RAG knowledge source fresh without manually collecting and cleaning documents every time.",did:"Built the Power Automate + SharePoint flow that fetches, structures and feeds documents downstream.",labels:["SharePoint","Power Automate","cleaning","RAG source"]},
